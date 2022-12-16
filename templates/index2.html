@@ -1,0 +1,108 @@
+<!-- MIT License
+
+Copyright (c) 2020 Gourishankar panda
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE. -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <!-- changes in icon -->
+        <link rel = "icon" href ="{{ url_for('static', filename = 'images/logo-designs/logo-2.png') }}" type = "image/x-icon">
+        <link href="https://fonts.googleapis.com/css?family=Lato:100,300,600" rel="stylesheet" type="text/css">
+        <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename = 'style.css') }}">
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename = 'toggle.css') }}">
+        <!-- title of the page -->
+        <title>Pig Game</title>
+    </head>
+    <!-- body started -->
+    <body> 
+        <div class="wrapper clearfix">
+            <div class="params-theme">
+                <span>Switch theme !</span>
+                <div>
+                    <input type="checkbox" id="toggle" class="checkbox" onclick="changeTheme(checked);" />
+                    <label for="toggle" class="switch"></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="wrapper clearfix">
+            <div class="params-rules">
+                <button class="btn-rules" onclick="toggleRulesModal()"><i class="ion-information-circled"></i>Show rules</button>
+            </div>
+            <span class="highest-score"><i class="ion-ios-flag"></i>Highest score : <span>0</span></span>
+            <div id="player-panel-container"><!-- Player panels will be generated to here--></div>
+            <span class="score-goal">Goal: <input type="text" id="score-goal-box" value="100" /> </span>
+
+            <button class="btn-new"><i class="ion-ios-plus-outline"></i>New game</button>
+            <button class="btn-roll"><i class="ion-ios-loop"></i>Roll dice</button>
+            <button class="btn-hold"><i class="ion-ios-download-outline"></i>Hold</button>
+            <!-- deletion of dice in alt -->
+
+            <div class="difficulty-mode">
+                <br>
+                <label for="mode">Choose mode:</label>
+                <select name="mode" id="mode" onchange="selectModeDifficulty()">
+                    <option value="sequential">Sequential</option>
+                    <option value="simultaneous">Simultaneous</option>
+                </select>
+                <br><br>
+                <label for="difficulty">Choose difficulty:</label>
+                <select name="difficulty" id="difficulty" onchange="selectModeDifficulty()">
+                    <option value="hard">Hard</option>
+                    <option value="normal">Normal</option>
+                    <option value="easy">Easy</option>
+                </select>
+            </div>
+
+            <div class="dice-container">
+              <img src="{{ url_for('static', filename='images/dice-6.png') }}" alt="" id="dice-0" class="dice"></img>
+              <img src="{{ url_for('static', filename='images/dice-5.png') }}" alt="" id="dice-1" class="dice"></img>
+            </div>
+            <!--img src="images/dice-5.png" alt="" class="dice"/ -->
+        </div>
+
+        <!-- modal for rules reading -->
+        <div class="modal overlay rules hidden">
+            <div class="modal-body">
+                <button class="btn-close" onclick="toggleRulesModal()"><i class="ion-ios-plus-outline"></i>Close</button>
+                <span class="title">PIG GAME RULES</span>
+                <ul>
+                    <li>The game has 2 players, playing in rounds</li>
+                    <li>In each turn, a player rolls a dice as many times as he wishes. Each result get added to his ROUND score</li>
+                    <li>BUT, if the player rolls a 1, all his ROUND score gets lost. After that, it's the next player's turn</li>
+                    <li>The player can choose to 'Hold', which means that his ROUND score gets added to his GLOBAL score. After that, it's the next player's turn</li>
+                    <li>The first player to reach 100 points on GLOBAL score wins the game.</li>
+                </ul>
+            </div>
+        </div>
+
+{#        <script src="{{ url_for('static', filename = 'app.js') }}"> </script>#}
+        <script type="text/javascript">
+            let action_sequential_hard = {{data}};
+            let action_simul_normal = {{ normal }};
+            let action_simul_hard = {{ hard }};
+        </script>
+        <script src="{{ url_for('static', filename='sequential2.js') }}"></script>
+    <!-- body ends here -->
+    </body>
+</html>
