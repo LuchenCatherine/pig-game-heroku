@@ -430,17 +430,19 @@ function computerMove(goal,p1score,p2score,action) {
     let again = true;
     let values = [];
 
+    console.log(goal, p1score, p2score);
     while (again)
     {
         let diceValue = Math.floor(Math.random() * 6 + 1);
         values.push(diceValue);
 
-        if (diceValue == 1) {
+        if (diceValue === 1) {
             roundScore = 0; //One 1, turn score = 0
             again = false;
         }
         else {
             roundScore += diceValue;
+            console.log(roundScore);
             if (roundScore + p2score >= goal || !action[p2score][p1score][roundScore]) {
                 again = false;
             }
@@ -455,7 +457,6 @@ function computerMoveSimul(goal,p1score,p2score,action) {
     let again = true;
     let values = [];
 
-    console.log(action);
     console.log(goal, p1score, p2score);
     while (again)
     {
@@ -468,10 +469,10 @@ function computerMoveSimul(goal,p1score,p2score,action) {
         }
         else {
             roundScore += diceValue;
+            console.log(roundScore);
             if (roundScore >= action[p2score][p1score]) {
                 again = false;
             }
-            console.log(roundScore);
         }
     }
 
