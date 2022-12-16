@@ -198,6 +198,13 @@ i {
     top: 403px; left: 160px;
 }
 
+#merry {
+    position: absolute;
+    top: 375px;
+    left: 690px;
+    height: 135px;
+}
+
 
 .dice-container {
     position: absolute;

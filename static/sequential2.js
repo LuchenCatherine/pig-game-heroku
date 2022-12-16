@@ -131,6 +131,7 @@ function createPlayerPanel(i) {
     playerPanel.appendChild(playerScoreElement);
     playerPanel.appendChild(playerBoxElement);
 
+
     return {
         panel: playerPanel,
         current: playerCurrentScoreElement,
@@ -225,6 +226,9 @@ function newGame() {
     selectModeDifficulty();
     // document.querySelector('.btn-roll').addEventListener('click', roll_simultaneous);
     // document.querySelector('.btn-hold').addEventListener('click', hold_simultaneous);
+    let merryDom = document.getElementById(`merry`);
+    merryDom.style.display = 'block';
+    merryDom.src = `static/images/pig-game-image-merry.png`;
 }
 
 function hold() {
@@ -529,9 +533,9 @@ function selectModeDifficulty() {
         if (difficulty === "hard") {
             action = action_sequential_hard;
         } else if (difficulty === "normal") {
-            action = action_sequential_hard;
+            action = action_sequential_normal;
         } else {
-            action = action_sequential_hard;
+            action = action_sequential_easy;
         }
     } else {
         removeCurrentEventListener();
@@ -542,7 +546,7 @@ function selectModeDifficulty() {
 
         if (difficulty === "hard") action = action_simul_hard;
         else if (difficulty === "normal") action = action_simul_normal;
-        else action = action_simul_normal;
+        else action = action_simul_easy;
     }
 }
 

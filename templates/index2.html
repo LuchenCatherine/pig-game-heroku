@@ -72,11 +72,16 @@ SOFTWARE. -->
                     <option value="normal">Normal</option>
                     <option value="easy">Easy</option>
                 </select>
+
             </div>
 
             <div class="dice-container">
               <img src="{{ url_for('static', filename='images/dice-6.png') }}" alt="" id="dice-0" class="dice"></img>
               <img src="{{ url_for('static', filename='images/dice-5.png') }}" alt="" id="dice-1" class="dice"></img>
+            </div>
+
+            <div class="pig-by-merry">
+                <img src="{{ url_for('static', filename='images/pig-game-image-merry.png') }}" alt="" id="merry" class="pig-merry"></img>
             </div>
             <!--img src="images/dice-5.png" alt="" class="dice"/ -->
         </div>
@@ -98,11 +103,16 @@ SOFTWARE. -->
 
 {#        <script src="{{ url_for('static', filename = 'app.js') }}"> </script>#}
         <script type="text/javascript">
-            let action_sequential_hard = {{data}};
-            let action_simul_normal = {{ normal }};
-            let action_simul_hard = {{ hard }};
+            let action_simul_easy = {{ simul_easy}};
+            let action_simul_normal = {{ simul_normal }};
+            let action_simul_hard = {{ simul_hard }};
+
+            let action_sequential_easy = {{ sequential_easy}};
+            let action_sequential_normal = {{ sequential_normal}};
+            let action_sequential_hard = {{ sequential_hard}};
         </script>
         <script src="{{ url_for('static', filename='sequential2.js') }}"></script>
+
     <!-- body ends here -->
     </body>
 </html>
