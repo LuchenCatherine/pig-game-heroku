@@ -253,8 +253,11 @@ async function roll_machine() {
     //Sets the appropriate number of dice depending on player toggle
     let numDice = players[0].getNumDice();
 
-    let opponentCurrentScores = parseInt(uiElements[0].current.textContent);
-    let diceValueList = computerMove(goal,opponentCurrentScores,activeScores,action);
+    let opponentTotalScores = players[0].getScore()
+    let machineTotalScores = players[1].getScore()
+
+    console.log(opponentTotalScores, machineTotalScores);
+    let diceValueList = computerMove(goal,opponentTotalScores,machineTotalScores,action);
 
     console.log(diceValueList);
     for (value of diceValueList) {
