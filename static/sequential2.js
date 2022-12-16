@@ -466,7 +466,7 @@ function computerMoveSimul(goal,p1score,p2score,action) {
         }
         else {
             roundScore += diceValue;
-            if (roundScore + p2score >= action[p2score][p1score]) {
+            if (roundScore >= action[p2score][p1score]) {
                 again = false;
             }
         }
