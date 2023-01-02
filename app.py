@@ -15,6 +15,7 @@ def index():  # put application's code here
     action_sequential_normal = np.load('one_die_sequential_normal_action.npy')
     action_sequential_hard = np.load('one_die_action.npy')
 
+
     json_array_simul_normal = json.dumps(action_simul_normal.tolist())
     json_array_simul_hard = json.dumps(action_simul_hard.tolist())
     json_array_simul_easy = json.dumps(action_simul_easy.tolist())

@@ -69,58 +69,58 @@ class Player {
 }
 
 function createPlayerPanel(i) {
-    let playerPanel = document.createElement("div")
+    let playerPanel = document.createElement("div");
     playerPanel.setAttribute("class", `player-panel player-${i}-panel`);
 
     let playerNameElement = document.createElement("div");
-    playerNameElement.setAttribute("class", "player-name")
+    playerNameElement.setAttribute("class", "player-name");
     playerNameElement.innerHTML = `Player ${i + 1}`;
 
     if (i === 0) playerNameElement.innerHTML = `Player`;
-    if (i === 1) playerNameElement.innerHTML = `Machine`;
+    if (i === 1) playerNameElement.innerHTML = `Computer`;
 
     let playerScoreElement = document.createElement("div");
-    playerScoreElement.setAttribute("class", `player-score player-${i}-score`)
+    playerScoreElement.setAttribute("class", `player-score player-${i}-score`);
     playerScoreElement.innerHTML = `0`;
 
-    let playerBoxElement = document.createElement("div")
+    let playerBoxElement = document.createElement("div");
     playerBoxElement.setAttribute("class", `player-current-box player-${i}-current-box`);
 
 
-    let playerCurrentLabelElement = document.createElement("div")
+    let playerCurrentLabelElement = document.createElement("div");
     playerCurrentLabelElement.setAttribute("class", `player-current-label`);
-    playerCurrentLabelElement.innerText = "Current";
+    playerCurrentLabelElement.innerText = "Round Score";
 
-    let playerCurrentScoreElement = document.createElement("div")
+    let playerCurrentScoreElement = document.createElement("div");
     playerCurrentScoreElement.setAttribute("class", `player-current-score`);
     playerCurrentScoreElement.innerText = "0";
 
 
-    let paramsDiceElement = document.createElement("div")
+    let paramsDiceElement = document.createElement("div");
     paramsDiceElement.setAttribute("class", `params-dice`);
 
-    let paramsDiceLabel = document.createElement("span")
-    paramsDiceLabel.setAttribute("id", `player-${i}-dice-num`);
-    paramsDiceLabel.innerText = 'Rolling 1 dice'
+    // let paramsDiceLabel = document.createElement("span");
+    // paramsDiceLabel.setAttribute("id", `player-${i}-dice-num`);
+    // paramsDiceLabel.innerText = 'Rolling 1 dice';
 
 
-    let toggleContainer = document.createElement("div");
+    // let toggleContainer = document.createElement("div");
 
-    let toggleInput = document.createElement("input")
+    let toggleInput = document.createElement("input");
     toggleInput.setAttribute("id", `dice-toggle-${i}`);
     toggleInput.setAttribute("type", "checkbox");
     toggleInput.setAttribute("class", "checkbox");
     toggleInput.onclick = (function() {toggleNumDice(i, this.checked);}).bind(toggleInput);
 
-    let toggleLabel = document.createElement("label")
+    let toggleLabel = document.createElement("label");
     toggleLabel.setAttribute("for", `dice-toggle-${i}`);
     toggleLabel.setAttribute("class", "switch");
 
-    toggleContainer.appendChild(toggleInput);
-    toggleContainer.appendChild(toggleLabel);
+    // toggleContainer.appendChild(toggleInput);
+    // toggleContainer.appendChild(toggleLabel);
 
-    paramsDiceElement.appendChild(paramsDiceLabel);
-    paramsDiceElement.appendChild(toggleContainer);
+    // paramsDiceElement.appendChild(paramsDiceLabel);
+    // paramsDiceElement.appendChild(toggleContainer);
 
 
     playerBoxElement.appendChild(playerCurrentLabelElement);
@@ -167,13 +167,11 @@ for (let i = 0; i < numPlayers; i++) {
 let activeScores = 0;
 let activePlayer = 0;
 let doubleSix = false;
-let highestScore = 0;
 let goal = 100;
 let action = action_sequential_hard;
 let currentEventListenerRoll = roll_simultaneous;
 let currentEventListenerHold = hold_simultaneous;
 
-let highestScoreEl = document.querySelector('.highest-score span');
 //Get all dice elements and hide them
 const dice = document.querySelectorAll('.dice');
 dice.forEach(die => die.style.display = 'none');
@@ -212,15 +210,15 @@ function newGame() {
     activePlayer = 0;
     doubleSix = false;
 
-    players.forEach((player, index) => {player.setScore(0);})
+    players.forEach((player, index) => {player.setScore(0);});
     uiElements.forEach((playerUIElements, index) => {
         playerUIElements.current.textContent = '0';
         playerUIElements.total.textContent = '0';
-    })
+    });
 
     document.querySelectorAll('.player-panel').forEach(e => e.classList.remove('active', 'winner'));
     document.querySelector('.player-0-panel').classList.add('active');
-    document.querySelector('.dice').style.display = 'none'
+    document.querySelector('.dice').style.display = 'none';
     document.getElementById('score-goal-box').readOnly = false;
 
     selectModeDifficulty();
@@ -229,11 +227,19 @@ function newGame() {
     let merryDom = document.getElementById(`merry`);
     merryDom.style.display = 'block';
     merryDom.src = `static/images/pig-game-image-merry.png`;
+
+    bar_human.animate(0.0);
+    bar_machine.animate(0.0);
+
+    names = document.getElementsByClassName('player-name');
+    names[0].innerHTML = `Player`;
+    names[1].innerHTML = `Computer`;
+
+
 }
 
 function hold() {
     let newScore = players[activePlayer].addScore(activeScores);
-    updateHighestScore(newScore);
     let hasWinner = checkWinner();
     activeScores = 0;
 
@@ -257,8 +263,8 @@ async function roll_machine() {
     //Sets the appropriate number of dice depending on player toggle
     let numDice = players[0].getNumDice();
 
-    let opponentTotalScores = players[0].getScore()
-    let machineTotalScores = players[1].getScore()
+    let opponentTotalScores = players[0].getScore();
+    let machineTotalScores = players[1].getScore();
 
     console.log(opponentTotalScores, machineTotalScores);
     let diceValueList = computerMove(goal,opponentTotalScores,machineTotalScores,action);
@@ -266,7 +272,7 @@ async function roll_machine() {
     console.log(diceValueList);
     for (value of diceValueList) {
 
-        let diceDom = document.getElementById(`dice-0`);
+        let diceDom = document.getElementById(`dice-machine`);
         diceDom.style.display = 'block';
         diceDom.src = `static/images/dice-${value}.png`;
         diceDom.alt = `Machine rolled: ${value}`;
@@ -339,13 +345,19 @@ function nextPlayer() {
 
     let score = players[activePlayer].getScore();
     uiElements[activePlayer].total.textContent = score.toString();
+    if (activePlayer === 0) {
+        bar_human.animate(score/100.0);
+    }
+    else {
+        bar_machine.animate(score/100.0);
+    }
     activeScores = 0;
     doubleSix = false;
     uiElements[activePlayer].current.textContent = '0';
     //switch player
     activePlayer = (activePlayer + 1) % numPlayers;
     //switch active state
-    changeActiveState()
+    changeActiveState();
     if (activePlayer === 1) roll_machine();
 }
 
@@ -355,9 +367,11 @@ function checkWinner() {
         let player = players[i];
         let score = player.getScore();
         if (score >= goal) {
-            console.log("we have a winner: " + player.getName())
+            console.log("we have a winner: " + player.getName());
+            let names = document.getElementsByClassName('player-name');
+            names[i].innerHTML = names[i].innerHTML + " Win!";
             uiElements[i].winnerPanel.classList.add('winner', 'active');
-            alert(`${player.getName()} is winner`)
+            // alert(`${player.getName()} is winner`);
             gameOver();
 
             return true;
@@ -380,7 +394,7 @@ function changeActiveState() {
 function looseScore() {
     console.log('loosing score');
     activeScores = 0;
-    players[activePlayer].setScore(0)
+    players[activePlayer].setScore(0);
     uiElements[activePlayer].total.textContent = players[activePlayer].getScore().toString();
     uiElements[activePlayer].current.textContent = '0';
 }
@@ -419,11 +433,6 @@ function toggleNumDice(playerId, checked) {
     let numDice = checked ? 2 : 1;
     players[playerId].setNumDice(numDice);
     document.getElementById(`player-${playerId}-dice-num`).textContent = numDice == 1 ? 'Rolling 1 die' : `Rolling ${numDice} dice`;
-}
-
-function updateHighestScore(score) {
-    if (score > highestScore) highestScore = score;
-    highestScoreEl.textContent = highestScore;
 }
 
 
@@ -558,10 +567,6 @@ function hold_simultaneous() {
         let newScoreHuman = players[0].addScore(currentScoreHuman);
         let currentScoreMachine = parseInt(uiElements[1].current.textContent);
         let newScoreMachine = players[1].addScore(currentScoreMachine);
-
-        updateHighestScore(newScoreHuman);
-        updateHighestScore(newScoreMachine);
-
         let hasWinner = checkWinner();
         activeScores = 0;
 
@@ -569,6 +574,9 @@ function hold_simultaneous() {
         uiElements[0].current.textContent = '0';
         uiElements[1].total.textContent = newScoreMachine.toString();
         uiElements[1].current.textContent = '0';
+
+        bar_human.animate(newScoreHuman/100.0);
+        bar_machine.animate(newScoreMachine/100.0);
 
         if (!hasWinner) nextPlayer_simultaneous();
 
@@ -592,8 +600,8 @@ async function roll_machine_simultaneous() {
 
     // let opponentCurrentScores = parseInt(uiElements[0].current.textContent);
 
-    let opponentTotalScores = players[0].getScore()
-    let machineTotalScores = players[1].getScore()
+    let opponentTotalScores = players[0].getScore();
+    let machineTotalScores = players[1].getScore();
 
     console.log(opponentTotalScores, machineTotalScores);
     let diceValueList = computerMoveSimul(goal,opponentTotalScores,machineTotalScores,action);
@@ -601,7 +609,7 @@ async function roll_machine_simultaneous() {
     console.log(diceValueList);
     for (value of diceValueList) {
 
-        let diceDom = document.getElementById(`dice-0`);
+        let diceDom = document.getElementById(`dice-machine`);
         diceDom.style.display = 'block';
         diceDom.src = `static/images/dice-${value}.png`;
         diceDom.alt = `Machine rolled: ${value}`;
@@ -678,7 +686,7 @@ function roll_simultaneous() {
 
 function nextPlayer_simultaneous() {
 
-    //let score = players[activePlayer].getScore();
+    let score = players[activePlayer].getScore();
     //uiElements[activePlayer].total.textContent = score.toString();
     activeScores = 0;
     doubleSix = false;
@@ -686,8 +694,9 @@ function nextPlayer_simultaneous() {
     //switch player
     activePlayer = (activePlayer + 1) % numPlayers;
     //switch active state
-    changeActiveState()
+    changeActiveState();
     if (activePlayer === 1) roll_machine_simultaneous();
 }
 
 newGame();
+

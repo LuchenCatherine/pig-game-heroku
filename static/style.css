@@ -89,7 +89,7 @@ body.dark-theme .wrapper {
     margin-top: 20px;
     margin-bottom: 10px;
     position: relative;
-    font-family:sansa-sarif;
+    font-family:Arial;
 }
 
 .player-score {
@@ -113,15 +113,15 @@ body.dark-theme .wrapper {
 body.dark-theme .active { background-color: #333; }
 .active .player-name { font-weight: 300; }
 
-.active .player-name::after {
-    content: "\2022";
-    font-size: 47px;
-    position: absolute;
-    color: #EB4D4D;
-    top: -7px;
-    right: 10px;
+/*.active .player-name::after {*/
+/*    content: "\2022";*/
+/*    font-size: 47px;*/
+/*    position: absolute;*/
+/*    color: #EB4D4D;*/
+/*    top: -7px;*/
+/*    right: 10px;*/
 
-}
+/*}*/
 
 .player-current-box {
     background-color: #EB4D4D;
@@ -190,18 +190,27 @@ i {
 }
 
 .btn-new { top: 100px;}
-.btn-roll { top: 403px;}
-.btn-hold { top: 467px;}
+
+.btn-roll {
+    top: 423px;
+    left: 245px;
+}
+
+.btn-hold {
+    top: 467px;
+    left: 245px;
+}
 
 .difficulty-mode {
     position: absolute;
-    top: 403px; left: 160px;
+    top: 403px;
+    right: 100px;
 }
 
 #merry {
     position: absolute;
-    top: 375px;
-    left: 690px;
+    top: 200px;
+    left:44%;
     height: 135px;
 }
 
@@ -216,6 +225,24 @@ i {
 .dice {
     height: 100px;
     box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.10);
+}
+
+/*#dice-human {*/
+/*    position: absolute;*/
+/*    top: 375px;*/
+/*    left: 200px;*/
+/*}*/
+
+#dice-0 {
+    position:absolute;
+    top: 200px;
+    left:30px;
+}
+
+#dice-machine {
+    position: absolute;
+    top: 200px;
+    right:30px;
 }
 
 .winner { background-color: #f7f7f7; }
@@ -394,3 +421,20 @@ input {
   font-weight: 300;
 }
 
+#bar_human {
+    margin: 0px;
+    width: 300px;
+    height: 10px;
+    position: absolute;
+    left:110px;
+    top: 330px;
+}
+
+#bar_machine {
+    margin: 0px;
+    width: 300px;
+    height: 10px;
+    position: absolute;
+    left:610px;
+    top: 320px;
+}
