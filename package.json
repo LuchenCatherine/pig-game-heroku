@@ -1,7 +1,0 @@
-{
-  "name": "pig-game-heroku",
-  "version": "1.0.0",
-  "devDependencies": {
-    "progressbar.js": "^1.1.0"
-  }
-}
