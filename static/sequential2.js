@@ -441,6 +441,34 @@ function toggleRulesModal() {
     document.querySelector('.modal.rules').classList.toggle('hidden');
 }
 
+// function computerMove(goal,p1score,p2score,action) {
+//     let roundScore = 0;
+//     let again = true;
+//     let values = [];
+//
+//     console.log(goal, p1score, p2score);
+//     while (again)
+//     {
+//         let diceValue = Math.floor(Math.random() * 6 + 1);
+//         values.push(diceValue);
+//
+//         if (diceValue === 1) {
+//             roundScore = 0; //One 1, turn score = 0
+//             again = false;
+//         }
+//         else {
+//             roundScore += diceValue;
+//             console.log(roundScore);
+//             if (roundScore + p2score >= goal || !action[p2score][p1score][roundScore]) {
+//                 again = false;
+//             }
+//         }
+//     }
+//
+//     return values;
+// }
+
+
 function computerMove(goal,p1score,p2score,action) {
     let roundScore = 0;
     let again = true;
@@ -459,7 +487,7 @@ function computerMove(goal,p1score,p2score,action) {
         else {
             roundScore += diceValue;
             console.log(roundScore);
-            if (roundScore + p2score >= goal || !action[p2score][p1score][roundScore]) {
+            if (roundScore >= action[p2score][p1score]) {
                 again = false;
             }
         }
