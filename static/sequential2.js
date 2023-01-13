@@ -245,6 +245,9 @@ function hold() {
 
     uiElements[activePlayer].total.textContent = newScore.toString();
     uiElements[activePlayer].current.textContent = '0';
+
+    if (activePlayer === 0) removeCurrentEventListener();
+    else recoverCurrentEventListener();
     if (!hasWinner) nextPlayer();
 }
 
@@ -289,6 +292,7 @@ async function roll_machine() {
 
 
 function roll_human() {
+
     if (!document.getElementById('score-goal-box').readOnly) {
         document.getElementById('score-goal-box').readOnly = true;
         goal = parseInt(document.getElementById('score-goal-box').value);
@@ -316,6 +320,7 @@ function roll_human() {
         if (dice == 1) {
             console.log("1 rolled");
             doubleSix = false;
+            removeCurrentEventListener();
             nextPlayer();
             break; //do not proceed if the current die roll is 1
         } else {
@@ -523,45 +528,24 @@ function computerMoveSimul(goal,p1score,p2score,action) {
     return values;
 }
 
-function selectDifficulty() {
-
-    let difficulty = document.getElementById("difficulty").value;
-    if (difficulty === "hard") {
-        action = action_sequential_hard;
-    } else if (difficulty === "normal") {
-        action = action_simul_normal;
-    } else if (difficulty === "easy") {
-        action = action_simul_hard;
-    }
-
-}
-
-function selectMode() {
-
-    let mode = document.getElementById("mode").value;
-    if (mode === "sequential") {
-        document.querySelector('.btn-roll').addEventListener('click', roll);
-        document.querySelector('.btn-hold').addEventListener('click', hold);
-
-    } else if (mode === "simultaneous") {
-        document.querySelector('.btn-roll').addEventListener('click', roll_simultaneous);
-        document.querySelector('.btn-hold').addEventListener('click', hold_simultaneous);
-    }
-
-}
 
 function removeCurrentEventListener() {
     document.querySelector('.btn-roll').removeEventListener('click', currentEventListenerRoll);
     document.querySelector('.btn-hold').removeEventListener('click', currentEventListenerHold);
 }
 
+function recoverCurrentEventListener() {
+    document.querySelector('.btn-roll').addEventListener('click', currentEventListenerRoll);
+    document.querySelector('.btn-hold').addEventListener('click', currentEventListenerHold);
+}
+
+
 function selectModeDifficulty() {
     let difficulty = document.getElementById("difficulty").value;
     let mode = document.getElementById("mode").value;
 
+    removeCurrentEventListener();
     if (mode === "sequential") {
-
-        removeCurrentEventListener();
         document.querySelector('.btn-roll').addEventListener('click', roll);
         document.querySelector('.btn-hold').addEventListener('click', hold);
         currentEventListenerRoll = roll;
@@ -575,7 +559,6 @@ function selectModeDifficulty() {
             action = action_sequential_easy;
         }
     } else {
-        removeCurrentEventListener();
         document.querySelector('.btn-roll').addEventListener('click', roll_simultaneous);
         document.querySelector('.btn-hold').addEventListener('click', hold_simultaneous);
         currentEventListenerRoll = roll_simultaneous;
@@ -589,6 +572,9 @@ function selectModeDifficulty() {
 
 
 function hold_simultaneous() {
+    if (activePlayer === 0) removeCurrentEventListener();
+        else recoverCurrentEventListener();
+
     if (activePlayer === 0) {activeScores = 0; nextPlayer_simultaneous(); }
     else {
         let currentScoreHuman = parseInt(uiElements[0].current.textContent);
@@ -685,6 +671,7 @@ function roll_human_simultaneous() {
             doubleSix = false;
             activeScores = 0;
             uiElements[activePlayer].current.textContent = '0';
+            removeCurrentEventListener();
             nextPlayer_simultaneous();
             break; //do not proceed if the current die roll is 1
         } else {
