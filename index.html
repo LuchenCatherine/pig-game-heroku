@@ -98,12 +98,22 @@ SOFTWARE. -->
             <div class="modal-body">
                 <button class="btn-close" onclick="toggleRulesModal()"><i class="ion-ios-plus-outline"></i>Close</button>
                 <span class="title">PIG GAME RULES</span>
+                <h1>Sequential: </h1>
                 <ul>
-                    <li>The game has 2 players, playing in rounds</li>
-                    <li>In each turn, a player rolls a dice as many times as he wishes. Each result get added to his ROUND score</li>
-                    <li>BUT, if the player rolls a 1, all his ROUND score gets lost. After that, it's the next player's turn</li>
-                    <li>The player can choose to 'Hold', which means that his ROUND score gets added to his GLOBAL score. After that, it's the next player's turn</li>
-                    <li>The first player to reach 100 points on GLOBAL score wins the game.</li>
+                    <li> Player and Computer take turns to roll a single die to compete against each other. </li>
+                    <li> At a player's turn, the player can roll or hold. </li>
+                    <li> If the player rolls a 1, his/her round score becomes 0 and his/her turn ends – it becomes the computer’s turn. </li>
+                    <li> If the player rolls a number other than 1, the number will be added to the round score. </li>
+                    <li> If the player holds, the round score will be added to the total score. </li>
+                    <li> Whoever reaches the goal (100) first wins the game. </li>
+                </ul>
+                <h1>Simultaneous:</h1>
+                <ul>
+                    <li> Rules are the same as sequential game, except: </li>
+                    <li> Player and Computer each roll a single die simultaneously to compete against each other. </li>
+                    <li> A turn ends if both player and computer stop rolling which means either rolls a 1 or holds.  </li>
+                    <li> Whoever reaches the goal (100) first wins the game. If both player and computer reach 100 at the same turn, then it’s a draw. </li>
+
                 </ul>
             </div>
         </div>

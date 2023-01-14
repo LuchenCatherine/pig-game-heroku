@@ -386,9 +386,38 @@ function checkWinner() {
     return false;
 }
 
+function checkWinner_simul() {
+    let human_score = players[0].getScore();
+    let machine_score = players[1].getScore();
+    let names = document.getElementsByClassName('player-name');
+
+    if (human_score >= goal && machine_score >= goal) {
+        names[0].innerHTML = 'Draw';
+        names[1].innerHTML = 'Draw';
+        uiElements[0].winnerPanel.classList.add('winner', 'active');
+        uiElements[1].winnerPanel.classList.add('winner', 'active');
+        gameOver();
+        return true;
+    }
+    else if (human_score >= goal) {
+        names[0].innerHTML = names[0].innerHTML + " Win!";
+        uiElements[0].winnerPanel.classList.add('winner', 'active');
+        gameOver();
+        return true;
+    }
+    else if (machine_score >= goal) {
+        names[1].innerHTML = names[1].innerHTML + " Win!";
+        uiElements[1].winnerPanel.classList.add('winner', 'active');
+        gameOver();
+        return true;
+    }
+    return false;
+}
+
+
 function gameOver() {
-    document.querySelector('.btn-roll').removeEventListener('click', roll);
-    document.querySelector('.btn-hold').removeEventListener('click', hold);
+    document.querySelector('.btn-roll').removeEventListener('click', currentEventListenerRoll);
+    document.querySelector('.btn-hold').removeEventListener('click', currentEventListenerHold);
 }
 
 function changeActiveState() {
@@ -581,7 +610,7 @@ function hold_simultaneous() {
         let newScoreHuman = players[0].addScore(currentScoreHuman);
         let currentScoreMachine = parseInt(uiElements[1].current.textContent);
         let newScoreMachine = players[1].addScore(currentScoreMachine);
-        let hasWinner = checkWinner();
+        let hasWinner = checkWinner_simul();
         activeScores = 0;
 
         uiElements[0].total.textContent = newScoreHuman.toString();
